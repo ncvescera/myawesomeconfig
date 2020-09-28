@@ -538,6 +538,10 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false }
     },
+    
+    -- partially_rounded_rect
+   -- { rule = { name = "polybar" },
+   --   properties = { shape = gears.shape.rounded_rect } },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -555,12 +559,22 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 
+    -- bordi arrotondati su tutte le applicazioni tranne polybar
+    if not (c.instance ~= nil and string.match(c.instance, "polybar")) then
+        c.shape = gears.shape.rounded_rect
+    end
+
     if awesome.startup
       and not c.size_hints.user_position
       and not c.size_hints.program_position then
+        -- Bordi arrotondati
+        -- c.shape = gears.shape.rounded_rect
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    
+    --c.shape = gears.shape.rounded_rect
+
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -618,5 +632,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("xrandr --output DVI-D-1 --primary --mode 1920x1080 --output HDMI-1 --mode 1280x1024  --left-of DVI-D-1")
 awful.spawn.with_shell("compton")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
+--awful.spawn.with_shell("~/Scrivania/test/test &")
 --awful.spawn.with_shell("polybar -c $HOME/.config/polybar/polybar-6/config-t1.ini main &")
 --awful.spawn.with_shell("nitrogen --restore")
