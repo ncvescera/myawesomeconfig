@@ -11,6 +11,7 @@ dati=(
 "Perchè la madonna è vergine!!!"
 "E gloria a dio"
 "Per inciso lui sta tornando"
+"Geova ha una potenza illimitata"
 )
 
 len=${#dati[@]}
